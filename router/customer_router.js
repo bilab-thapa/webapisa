@@ -59,7 +59,15 @@ router.post('/customer/login',(req,res)=>{
             res.json({msg:"Email or Password Incorrect"});
             return;
         }
-        bcryptjs.compare(password, cust_data.password,)
+        bcryptjs.compare(password, cust_data.password,(r, result)=>{
+            if(result == true){
+                res.json({msg:"Invalid Credentials"});
+                return;
+            }
+            //now everything is valid
+            console.log("validdd");
+
+        })
 
     })
     .catch
