@@ -19,3 +19,24 @@ module.exports.customerGuard = (req, res, next) => {
       res.json({msg:"Invalid Token"})
   }
 };
+
+
+module.exports.staffGuard = (req, res, next) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const data = jwt.verify(token, "bilab");
+    customer.findOne({_id:data.staffId})
+    .then((cdata)=>{
+        req.staffInfo = cdata;
+        next();
+    })
+    .catch((e)=>{
+        res.json({msg:'Invalid Token'})
+    })
+
+
+
+  } catch (e) {
+      res.json({msg:"Invalid Token"})
+  }
+};
