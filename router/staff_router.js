@@ -65,6 +65,8 @@ router.post("/staff/login", (req, res) => {
 });
 
 //update the profile
-router.post("/staff/uupdate", auth.staffGuard, (req, res) => {});
+router.post("/staff/update", auth.staffGuard, (req, res) => {
+  console.log(req);
+});
 
 module.exports = router;

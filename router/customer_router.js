@@ -5,6 +5,7 @@ const router = new express.Router();
 const Customer = require("../model/customer_model");
 const jwt = require("jsonwebtoken");
 const auth = require("../auth/auth");
+const { route } = require("express/lib/application");
 
 
 
@@ -53,7 +54,7 @@ router.post("/customer/login", (req, res) => {
       return;
     }
     bcryptjs.compare(password, cust_data.password, (r, result) => {
-      if (result == true) {
+      if (result == false) {
         res.json({ msg: "Invalid Credentials" });
         return;
       }
@@ -69,5 +70,18 @@ router.post("/customer/login", (req, res) => {
 router.delete("/customer/delete", auth.customerGuard, (req, res) => {
   res.json({ msg: "deleted" });
 });
+
+//ANCHOR This is Dashboard Screen
+
+router.get("/customer/dashboard",auth.customerGuard,(req,res)=>{
+  // console.log('Printed');
+  res.json(req.customerInfo)
+})
+
+//ANCHOR This is dashboard update
+router.put("/customer/update",auth.customerGuard,(req,res)=>{
+
+})
+
 
 module.exports = router;
