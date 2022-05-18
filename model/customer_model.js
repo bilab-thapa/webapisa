@@ -24,6 +24,9 @@ const customer = new mongoose.Schema({
         type: String,
         required: true
     },
+    customer_image:{
+        type : String,
+    }
 
 })
 module.exports = mongoose.model(" Customer",customer);

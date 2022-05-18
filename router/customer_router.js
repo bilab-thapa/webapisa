@@ -5,8 +5,7 @@ const router = new express.Router();
 const Customer = require("../model/customer_model");
 const jwt = require("jsonwebtoken");
 const auth = require("../auth/auth");
-const { route } = require("express/lib/application");
-
+const upload = require("../assetsFile/assets_file");
 
 
     //ANCHOR Inserting Customer data
@@ -75,12 +74,22 @@ router.delete("/customer/delete", auth.customerGuard, (req, res) => {
 
 router.get("/customer/dashboard",auth.customerGuard,(req,res)=>{
   // console.log('Printed');
-  res.json(req.customerInfo)
+  res.json({
+    firstname: req.customerInfo.firstname,
+    lastname: req.customerInfo.lastname,
+    email: req.customerInfo.email,
+    phone: req.customerInfo.phone
+  })
 })
 
-//ANCHOR This is dashboard update
-router.put("/customer/update",auth.customerGuard,(req,res)=>{
 
+//ANCHOR update profile picture
+
+router.put("/customer/picupdate",auth.customerGuard,upload.single('cust_image'),(req,res)=>{
+  Customer.updateOne({_id : req.customerInfo._id},{customer_image : req.file.filename})
+  .then()
+  .catch()
+  res.send({msg:"test"})
 })
 
 

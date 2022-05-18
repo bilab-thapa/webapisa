@@ -19,9 +19,6 @@ module.exports.customerGuard = (req, res, next) => {
     .catch((e)=>{
         res.json({msg:'Invalid Token'})
     })
-
-
-
   } catch (e) {
       res.json({msg:"Invalid Token"})
   }
