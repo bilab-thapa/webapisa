@@ -9,4 +9,7 @@ app.use(customerRouter);
 const staffRouter = require("./router/staff_router")
 app.use(staffRouter);
 
+const productRouter = require("./router/product_router")
+app.use(productRouter);
+
 app.listen(8080)

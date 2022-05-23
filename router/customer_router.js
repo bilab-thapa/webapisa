@@ -87,6 +87,7 @@ router.get("/customer/dashboard",auth.customerGuard,(req,res)=>{
 
 router.put("/customer/picupdate",auth.customerGuard,upload.single('cust_image'),(req,res)=>{
 
+
   Customer.updateOne({_id : req.customerInfo._id},{customer_image : req.file.filename})
   .then()
   .catch()
