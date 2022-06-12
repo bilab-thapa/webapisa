@@ -12,4 +12,4 @@ app.use(staffRouter);
 const productRouter = require("./router/product_router")
 app.use(productRouter);
 
-app.listen(8080)
+app.listen(8080);
