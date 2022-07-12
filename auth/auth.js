@@ -1,46 +1,50 @@
 const jwt = require("jsonwebtoken");
-const Customer = require("../model/customer_model");
-const Staff = require("../model/customer_model");
+const customer = require("../model/customerM")
+const admin = require("../model/adminM")
+
+//guard for customer
+
+module.exports.customerGuard=(req,res,next)=>{
+    try{
+        const token = req.headers.authorization.split(" ")[1];
+        const data = jwt.verify(token, "softwarica");
+        console.log(data);
+        customer.findOne({_id:data.customerId})
+        .then((cdata)=>{
+            req.customerInfo = cdata;
+            next();
+        })
+        .catch((e)=>{
+            res.json({message: "invalid token"})
+        })
+        
 
 
+    }
+    catch(e){
+        res.json({message:"invalid token"})
+    }
+} 
+
+//guard for admin
+module.exports.adminGuard=(req,res,next)=>{
+    try{
+        const token = req.headers.authorization.split(" ")[1];
+        const data = jwt.verify(token, "softwarica");
+        console.log(data);
+        admin.findOne({_id:data.adminId})
+        .then((cdata)=>{
+            req.adminInfo = cdata;
+            next();
+        })
+        .catch((e)=>{
+            res.json({message: "invalid token"})
+        })
+        
 
 
-module.exports.customerGuard = (req, res, next) => {
-  try {
-    const token = req.headers.authorization.split(" ")[1];
-    const data = jwt.verify(token, "bilab");
-    console.log(data)
-    Customer.findOne({_id:data.customer_id})
-    .then((cdata)=>{
-      console.log(cdata)
-        req.customerInfo = cdata;
-        next();
-    })
-    .catch((e)=>{
-        res.json({msg:'Invalid Token'})
-    })
-  } catch (e) {
-      res.json({msg:"Invalid Token"})
-  }
-};
-
-
-module.exports.staffGuard = (req, res, next) => {
-  try {
-    const token = req.headers.authorization.split(" ")[1];
-    const data = jwt.verify(token, "bilab");
-    Staff.findOne({_id:data.staffId})
-    .then((cdata)=>{
-        req.staffInfo = cdata;
-        next();
-    })
-    .catch((e)=>{
-        res.json({msg:'Invalid Token'})
-    })
-
-
-
-  } catch (e) {
-      res.json({msg:"Invalid Token"})
-  }
-};
+    }
+    catch(e){
+        res.json({message:"invalid token"})
+    }
+}
