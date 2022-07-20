@@ -16,10 +16,14 @@ const product = new mongoose.Schema({
         required: true
     },
     qty:{
-        type : Number,
+        type : String,
     },
-    cust_img:{
+    category:{
         type: String,
+    },
+    image:{
+        type: String,
+        required: true
     },
     userId:{
         type : mongoose.Schema.Types.ObjectId,

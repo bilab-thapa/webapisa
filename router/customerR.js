@@ -23,7 +23,6 @@ router.post("/customer/insert",(req,res)=>{
         const age = req.body.age;
         const email = req.body.email;
 
-         //what is 10? maybe char length?
 
         bcryptjs.hash(password, 10, (e, hashed_pw)=>{
             const data = new Customer({
@@ -89,40 +88,21 @@ router.post("/customer/login",(req,res)=>{
 
 router.get("/customer/dashboard",auth.customerGuard,(req,res)=>{
     console.log(req.customerInfo);
-    // const data = {
-    //     firstname: req.customerInfo.firstname,
-    //     lastname : req.customerInfo.lastname,
-    //     email: req.customerInfo.email,
-    //     age: req.customerInfo.age,
-    //     // password: req.customerInfo.password,
-    //     username: req.customerInfo.username,
-    // }
-
-    // console.log(data);
-    
-    // res
-    //     .json({success:true, data:data})
-    res.json({firstname: req.customerInfo.firstname,lastname:req.customerInfo.lastname,email:req.customerInfo.email,age:req.customerInfo.age,username:req.customerInfo.username})
-        
-    
-    
-
+    res.json({email:req.customerInfo.email,age:req.customerInfo.age,username:req.customerInfo.username})
 })
 
 //dashboard update route
 router.put("/customer/update",auth.customerGuard,(req,res)=>{
         const _id = req.customerInfo._id;
-        const firstname = req.body.firstname;
-        const lastname = req.body.lastname;
         const username = req.body.username;
         const email = req.body.email;
         const age = req.body.age;
+        const password = req.body.password;
         Customer.updateOne({_id:_id,
-            firstname:firstname,
-            lastname:lastname,
             username:username,
             email:email,
-            age:age},
+            age:age,
+        password:password,},
         )
         .then(()=>{
             res.json({message:"Updated", success:true})
